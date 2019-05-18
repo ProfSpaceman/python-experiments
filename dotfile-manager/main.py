@@ -4,70 +4,23 @@ import os
 HOME = os.environ['HOME']
 DOTFILES = os.environ['DOTFILES']
 
-'''
-cmd = ['ls', HOME]
-proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-o,e = proc.communicate()
-
-print('Output: ' + o.decode('ascii'))
-print('Error: ' + e.decode('ascii'))
-print('code: ' + str(proc.returncode))
-'''
-
 cmd2 = ['cp', HOME + '/.config/i3/config', DOTFILES + '/i3/']
-proc2 = subprocess.Popen(cmd2, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-o,e = proc2.communicate()
-
-print('Output: ' + o.decode('ascii'))
-print('Error: ' + e.decode('ascii'))
-print('code: ' + str(proc2.returncode))
-
-
 cmd3 = ['cp', HOME + '/.config/compton.conf', DOTFILES + '/compton/']
-proc3 = subprocess.Popen(cmd3, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-o,e = proc3.communicate()
-
-print('Output: ' + o.decode('ascii'))
-print('Error: ' + e.decode('ascii'))
-print('code: ' + str(proc3.returncode))
-
-
 cmd4 = ['cp', HOME + '/.Xresources', DOTFILES]
-proc4 = subprocess.Popen(cmd4, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-o,e = proc4.communicate()
-
-print('Output: ' + o.decode('ascii'))
-print('Error: ' + e.decode('ascii'))
-print('code: ' + str(proc4.returncode))
-
-
 cmd5 = ['cp', HOME + '/.bashrc', DOTFILES]
-proc5 = subprocess.Popen(cmd5, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-o,e = proc5.communicate()
-
-print('Output: ' + o.decode('ascii'))
-print('Error: ' + e.decode('ascii'))
-print('code: ' + str(proc5.returncode))
-
-
 cmd6 = ['cp', HOME + '/.vimrc', DOTFILES]
-proc6 = subprocess.Popen(cmd6, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-o,e = proc6.communicate()
+cmd = ['ls', HOME]
 
-print('Output: ' + o.decode('ascii'))
-print('Error: ' + e.decode('ascii'))
-print('code: ' + str(proc6.returncode))
+commands = [cmd2,cmd3,cmd4,cmd5,cmd6,cmd]
+command_string = ''
 
+proc = subprocess.Popen('/bin/bash', stdin=subprocess.PIPE ,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+for i in range(6):
+    for j in range(len(commands[i])):
+        command_string = command_string + ' ' + commands[i][j]
+    command_string = command_string + '\n'
 
-
-
-
-
-cmd = ['ls', DOTFILES]
-proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-o,e = proc.communicate()
-
+o,e = proc.communicate(command_string.encode('utf-8'))
 print('Output: ' + o.decode('ascii'))
 print('Error: ' + e.decode('ascii'))
 print('code: ' + str(proc.returncode))
-
